@@ -9,6 +9,7 @@ import java.util.Random;
 
 import org.jointheleague.ecolban.rpirobot.IRobotAdapter;
 import org.jointheleague.ecolban.rpirobot.IRobotInterface;
+import org.jointheleague.ecolban.rpirobot.SerialConnection;
 import org.jointheleague.ecolban.rpirobot.SimpleIRobot;
 
 
@@ -29,21 +30,18 @@ public class CleverRobot extends IRobotAdapter {
 		while (rob.loop()) {
 		}
 		rob.shutDown();
+		
 
 	}
+	
 
-	private void setup() throws Exception {
-		//driveDirect(100, 100);
-		cam = new Camera(100,100);
-		//for(int i : cam.pixels){
-		//	System.out.println(i);
-		//}
-	}
-	public boolean loop() throws InterruptedException, IOException  {
+	public boolean loop() throws Exception  {
         readSensors(SENSORS_GROUP_ID100);
 
         leds(139, 4, true);
-        rightmaze();
+        //Select Code
+        driveDirect(400, 400);
+        
         return true;
 
     }
@@ -60,7 +58,15 @@ public class CleverRobot extends IRobotAdapter {
         }
     }
 
-    public void leftmaze() throws InterruptedException, IOException {
+    private void setup() throws Exception {
+		//driveDirect(100, 100);
+		cam = new Camera(100,100);
+		//for(int i : cam.pixels){
+		//	System.out.println(i);
+		//}
+	}
+
+	public void leftmaze() throws InterruptedException, IOException {
         System.out.println(getWallSignal() + "");
         int Mlights[] = getLightBumps();
         drive(500, 220);
@@ -100,8 +106,8 @@ System.out.println("Running Gold");
     }
 
 
-    public void Dragrace() throws IOException, InterruptedException  {
-        driveDirect(500, 500);
+    public void Dragrace() throws Exception  {
+        drivePWM(256,256);
         int[] lights = getLightBumps();
         //Turn Left
         if (isBumpLeft() && isBumpRight()) {
